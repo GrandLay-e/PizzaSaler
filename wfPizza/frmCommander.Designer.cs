@@ -89,6 +89,7 @@
             grbClient.TabIndex = 0;
             grbClient.TabStop = false;
             grbClient.Text = "Client";
+            grbClient.Enter += grbClient_Enter;
             // 
             // boxAEmporter
             // 
@@ -215,6 +216,7 @@
             grbCommande.TabIndex = 1;
             grbCommande.TabStop = false;
             grbCommande.Text = "Commande";
+            grbCommande.Enter += grbCommande_Enter;
             // 
             // btsAddPizza
             // 
@@ -224,6 +226,7 @@
             btsAddPizza.TabIndex = 4;
             btsAddPizza.Text = "Ajouter";
             btsAddPizza.UseVisualStyleBackColor = true;
+            btsAddPizza.Click += btsAddPizza_Click;
             // 
             // qtePizzaIndication
             // 

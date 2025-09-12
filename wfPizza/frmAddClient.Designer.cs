@@ -1,6 +1,6 @@
 ﻿namespace wfPizza
 {
-    partial class frmAddClient
+    partial class FrmAddClient
     {
         /// <summary>
         /// Required designer variable.
@@ -147,8 +147,9 @@
             addClientValidationButton.TabIndex = 12;
             addClientValidationButton.Text = "Valider";
             addClientValidationButton.UseVisualStyleBackColor = true;
+            addClientValidationButton.Click += addClientValidationButton_Click;
             // 
-            // frmAddClient
+            // FrmAddClient
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -166,7 +167,7 @@
             Controls.Add(clientAdress);
             Controls.Add(clientFirstNameIndication);
             Controls.Add(clientLastNameIndication);
-            Name = "frmAddClient";
+            Name = "FrmAddClient";
             Text = "Ajouter Client";
             ResumeLayout(false);
             PerformLayout();

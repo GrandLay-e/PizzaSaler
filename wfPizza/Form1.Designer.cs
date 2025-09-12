@@ -57,12 +57,14 @@
             menuAddClientButton.Name = "menuAddClientButton";
             menuAddClientButton.Size = new Size(114, 24);
             menuAddClientButton.Text = "Ajouter Client";
+            menuAddClientButton.Click += menuAddClientButton_Click;
             // 
             // menuAddPizzaButton
             // 
             menuAddPizzaButton.Name = "menuAddPizzaButton";
             menuAddPizzaButton.Size = new Size(110, 24);
             menuAddPizzaButton.Text = "Ajouter Pizza";
+            menuAddPizzaButton.Click += menuAddPizzaButton_Click;
             // 
             // Form1
             // 

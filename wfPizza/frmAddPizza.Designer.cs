@@ -1,6 +1,6 @@
 ﻿namespace wfPizza
 {
-    partial class frmAddPizza
+    partial class FrmAddPizza
     {
         /// <summary>
         /// Required designer variable.
@@ -75,8 +75,9 @@
             addPizzaValidationButton.TabIndex = 4;
             addPizzaValidationButton.Text = "Valider";
             addPizzaValidationButton.UseVisualStyleBackColor = true;
+            addPizzaValidationButton.Click += addPizzaValidationButton_Click;
             // 
-            // frmAddPizza
+            // FrmAddPizza
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -86,7 +87,7 @@
             Controls.Add(pizzaNameInput);
             Controls.Add(pizzaPriceIndication);
             Controls.Add(pizzaNameIndication);
-            Name = "frmAddPizza";
+            Name = "FrmAddPizza";
             Text = "Ajouter Pizza";
             ResumeLayout(false);
             PerformLayout();
