@@ -16,7 +16,7 @@ Commande c2 = new Commande(cl2);
 c2.AjouterNouvellePizza(pizza2);
 
 //Gestion
-Gestion g = new Gestion();
+Gestion g = new Gestion(); 
 
 void TestGestion()
 {
