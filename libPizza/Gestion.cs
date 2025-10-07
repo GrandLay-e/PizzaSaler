@@ -53,7 +53,7 @@ namespace libPizza
             return 0;
         }
 
-        public void AjouterCommande(Client client) 
+        public void AjouterCommande(Client client)
         {
             Commande commande = new Commande(client);
             MesCommandes.Add(commande);
@@ -163,24 +163,27 @@ namespace libPizza
                                       $"VALUES ({cmd.NumCommande}, '{cmd.DateCommande:yyyy-MM-dd HH:mm:ss}', {(cmd.AEmporter ? 1 : 0)}, " +
                                       $"(SELECT id_client FROM Client WHERE Nom = '{cmd.LeClient.Nom}' AND Prenom = '{cmd.LeClient.Prenom}'))");
 
-            
+            // Sauvegarder les pizzas associées à la commande dans la table de gestion
+            //SauvegarderGestion(cmd);
         }
-        //public void SauvegarderGestion(Dictionary<Commande, List<Pizza>> commandesPizza)
-        //{
-        //    foreach (var entry in commandesPizza)
-        //    {
-        //        Commande cmd = entry.Key;
-        //        List<Pizza> pizzas = entry.Value;
-        //        foreach (var pizza in pizzas.Distinct())
-        //        {
-        //            int quantite = pizzas.Count(p => p.Nom == pizza.Nom);
-        //            Connexion.ExecuteNonQuery($"INSERT INTO Gestion (id_pizza, num_commande, quantite) VALUES " +
-        //                                      $"((SELECT id_pizza FROM Pizza WHERE Nom = '{pizza.Nom}'), " +
-        //                                      $"{cmd.NumCommande}," +
-        //                                      $"{quantite})");
-        //        }
-        //    }
-        //}
+        public void SauvegarderGestion(Commande cmd)
+        {
+            // Grouper les pizzas par nom pour calculer la quantité de chaque type de pizza
+            var pizzasGroupees = cmd.MesPizzas.GroupBy(p => p.Nom);
+            
+            foreach (var groupe in pizzasGroupees)
+            {
+                string nomPizza = groupe.Key;
+                int quantite = groupe.Count(); // Nombre de pizzas de ce type dans la commande
+                
+                // Insérer UNE SEULE ligne par type de pizza avec la quantité totale
+                Connexion.ExecuteNonQuery(
+                    $"INSERT INTO Gestion (id_pizza, num_commande, quantite) " +
+                    $"VALUES ((SELECT id_pizza FROM Pizza WHERE Nom = '{nomPizza}'), " +
+                    $"{cmd.NumCommande}, {quantite})");
+            }
+        }
+
         private void LoadPizzas()
         {
             var result = Connexion.ExecuteQuery("SELECT * FROM Pizza");

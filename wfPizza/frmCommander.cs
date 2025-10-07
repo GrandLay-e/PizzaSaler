@@ -7,14 +7,13 @@ namespace wfPizza
         private Home _accueil;
         private Client actualClient;
         private Pizza chosedPizza;
-        //private Dictionary<Commande, List<Pizza>> commandesPizzas = new Dictionary<Commande, List<Pizza>>();
+        private Dictionary<Pizza, int> pizaasInCommand;
 
-        //public Dictionary<Commande, List<Pizza>> CommandesPizzas
-        //{
-        //    get { return commandesPizzas; }
-        //    set { commandesPizzas = value; }
-        //}
-
+        public Dictionary<Pizza, int> PizzaInCommand
+        {
+            get { return pizaasInCommand; }
+            set { pizaasInCommand = value; }
+        }
         // Constructeur par défaut
         public FrmCommander()
         {
@@ -28,6 +27,7 @@ namespace wfPizza
             _accueil = accueil;
             RemplirComboBox();
             cmbClientName.SelectedIndexChanged += cmbClientName_SelectedIndexChanged;
+            PizzaInCommand = new Dictionary<Pizza, int>();
         }
 
         // Méthode pour remplir la ComboBox avec les noms des clients
@@ -54,16 +54,17 @@ namespace wfPizza
         // Gestion de l'événement de clic sur le bouton "Commander"
         private void btnCommander_Click(object sender, EventArgs e)
         {
-            foreach(Pizza pizza in _accueil.GestionPizza.MesPizzas)
-            {
-                if (pizza.Nom == cmbPizza.Text)
-                {
-                    _accueil.GestionPizza.AjouterCommande(actualClient);
-                    break;
-                }
+            _accueil.GestionPizza.AjouterCommande(actualClient);
+            int numCommande = _accueil.GestionPizza.NumCommandeClient(actualClient);
+            Commande commande = _accueil.GestionPizza.GetCommande(numCommande);
+            foreach(Pizza p in PizzaInCommand.Keys){
+                for(int i = 0; i < PizzaInCommand[p]; i++)
+                    commande.AjouterNouvellePizza(p);
             }
 
-            //MessageBox.Show(_accueil.GestionPizza.ToString());
+            _accueil.GestionPizza.SauvegarderGestion(commande);
+
+            //MessageBox.Show($"Commande numéro {numCommande} ajoutée pour le client {actualClient.Nom}.");
 
             foreach (Control control in grbClient.Controls)
             {
@@ -82,7 +83,8 @@ namespace wfPizza
                         break;
                 }
             }
-            //raz();
+            raz();
+            this.Close();
         }
 
         private void grbClient_Enter(object sender, EventArgs e)
@@ -146,11 +148,10 @@ namespace wfPizza
                     bool aEmporter = boxAEmporter.Checked;
                     total += montantPizza;
 
-                    listCommClient.Items.Add($"{cmbClientName.Text} - {nomPizza} - {qtePizza} - {montantPizza} € {(aEmporter ? "à emporter" : "sur place")}");
+                    listCommClient.Items.Add($"{nomPizza} - {qtePizza} - {montantPizza} € {(aEmporter ? "à emporter" : "sur place")}");
                     lblMtPizza.Text = total.ToString("0.00");
 
-                    //_accueil.GestionPizza.AjouterCommande(actualClient);
-                    _accueil.GestionPizza.AjouterPizza(chosedPizza, _accueil.GestionPizza.NumCommandeClient(actualClient));
+                    PizzaInCommand.Add(chosedPizza, qtePizza);
                 }
                 else
                 {
