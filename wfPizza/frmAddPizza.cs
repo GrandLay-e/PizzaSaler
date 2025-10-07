@@ -12,12 +12,12 @@ namespace wfPizza
 {
     public partial class FrmAddPizza : Form
     {
-        private Form1 _accueil;
+        private Home _accueil;
         public FrmAddPizza()
         {
             InitializeComponent();
         }
-        public FrmAddPizza(Form1 accueil)
+        public FrmAddPizza(Home accueil)
         {
             InitializeComponent();
              _accueil = accueil;
@@ -43,7 +43,8 @@ namespace wfPizza
                 }
             }
 
-            _accueil.gestionPizza.MesPizzas.Add(new libPizza.Pizza(nomPizza, prixPizza));
+            _accueil.GestionPizza.AjouterNouvelPizza(nomPizza, prixPizza);
+            this.Close();
 
         }
     }

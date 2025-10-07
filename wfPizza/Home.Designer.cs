@@ -1,6 +1,6 @@
 ﻿namespace wfPizza
 {
-    partial class Form1
+    partial class Home
     {
         /// <summary>
         ///  Required designer variable.
@@ -49,7 +49,7 @@
             // 
             menuCommandButton.Name = "menuCommandButton";
             menuCommandButton.Size = new Size(105, 24);
-            menuCommandButton.Text = "Commender";
+            menuCommandButton.Text = "Commander";
             menuCommandButton.Click += menuCommandButton_Click;
             // 
             // menuAddClientButton
@@ -66,14 +66,14 @@
             menuAddPizzaButton.Text = "Ajouter Pizza";
             menuAddPizzaButton.Click += menuAddPizzaButton_Click;
             // 
-            // Form1
+            // Home
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(menuStripHome);
             MainMenuStrip = menuStripHome;
-            Name = "Form1";
+            Name = "Home";
             Text = "Commande";
             menuStripHome.ResumeLayout(false);
             menuStripHome.PerformLayout();

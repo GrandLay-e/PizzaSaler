@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace libPizza
         private List<Commande> mesCommandes;
         private List<Client> mesClients;
         private List<Pizza> mesPizzas;
+
+        public ConnexionSingleton Connexion = ConnexionSingleton.Instance;
 
         public List<Commande> MesCommandes
         {
@@ -32,12 +35,15 @@ namespace libPizza
 
         public Gestion()
         {
-            this.MesCommandes = new List<Commande>();
-            this.MesClients = new List<Client>();
-            this.MesPizzas = new List<Pizza>();
+            MesCommandes = new List<Commande>();
+            MesClients = new List<Client>();
+            MesPizzas = new List<Pizza>();
+            Connexion.Initialize();
+            Connexion.OpenConnection();
+            LoadAll();
         }
 
-        public int NumCommandeClient(Client client) // Testé ok
+        public int NumCommandeClient(Client client)
         {
             foreach(Commande commande in mesCommandes)
             {
@@ -47,29 +53,40 @@ namespace libPizza
             return 0;
         }
 
-        public void AjouterCommande(Client client) // Testé Ok
+        public void AjouterCommande(Client client) 
         {
-            this.MesCommandes.Add(new Commande(client));
+            Commande commande = new Commande(client);
+            MesCommandes.Add(commande);
+            SauvegarderCommandes(commande);
         }
 
-        public void AjouterNouveauClient( //Testé OK
+        public void AjouterNouveauClient(
             string adresse,
-            string codePostal, 
-            string nom, 
-            string prenom, 
-            string telephone, 
-            string ville)
-        {
-            this.MesClients.Add(new Client(adresse, codePostal, nom, prenom, telephone, ville));
+            string codePostal,
+            string nom,
+            string prenom,
+            string telephone,
+            string ville){
+            Client client = new Client(adresse, codePostal, nom, prenom, telephone, ville);
+            MesClients.Add(client);
+            SauvegarderClients(client);
         }
 
-        public void AjouterNouvelPizza(string nom)
+        //public void AjouterNouvelPizza(string nom)
+        //{
+        //    MesPizzas.Add(new Pizza(nom));
+        //}
+        public void AjouterNouvelPizza(string nom, double prix)
         {
-            this.MesPizzas.Add(new Pizza(nom));
+            Pizza pizza = new Pizza(nom, prix);
+            MesPizzas.Add(pizza);
+            SauvegarderPizzas(pizza);
         }
+
+
         public void AjouterPizza(Pizza pizza, int numCommande)
         {
-            foreach(Commande commande in this.MesCommandes)
+            foreach(Commande commande in MesCommandes)
             {
                 if(commande.NumCommande == numCommande)
                 {
@@ -78,12 +95,12 @@ namespace libPizza
             }
         }
 
-        public List<Client> GetListClient() => this.MesClients;
-        public List<Pizza> GetListPizza() => this.MesPizzas;
+        public List<Client> GetListClient() => MesClients;
+        public List<Pizza> GetListPizza() => MesPizzas;
         
         public Client GetClient(string nom)
         {
-            foreach (Client client in this.MesClients)
+            foreach (Client client in MesClients)
             {
                 if(client.Nom == nom)
                     return client;
@@ -93,7 +110,7 @@ namespace libPizza
 
         public Pizza GetPizza(string nom)
         {
-            foreach(Pizza pizza  in this.MesPizzas)
+            foreach(Pizza pizza  in MesPizzas)
             {
                 if(pizza.Nom == nom) return pizza;
             }
@@ -102,7 +119,7 @@ namespace libPizza
 
         public Commande GetCommande(int numCommande)
         {
-            foreach(Commande commande in this.MesCommandes)
+            foreach(Commande commande in MesCommandes)
             {
                 if(commande.NumCommande == numCommande)
                     return commande;
@@ -114,5 +131,118 @@ namespace libPizza
         {
             return GetCommande(numCommande).ToString();
         }
+
+        public override string ToString()
+        {
+            return $"Gestion : [Commandes={string.Join(", ", MesCommandes)}, " + 
+                   $"Clients : {string.Join(", ", MesClients)}, " +
+                   $"Pizzas : {string.Join(", ", MesPizzas)}]";
+        }
+
+        ///_______________________________________________________________________________________________///
+        /// <summary>
+        /// METHODES POUR LA SAUVEGARDE ET LE CHARGEMENT
+        /// </summary>
+        /// 
+
+        private void SauvegarderClients( Client c)
+        {
+            Connexion.ExecuteNonQuery($"INSERT INTO Client (Nom, Prenom, Adresse, code_postal, Ville, Telephone) " +
+                                      $"VALUES ('{c.Nom}', '{c.Prenom}', '{c.Adresse}', '{c.CodePostal}', '{c.Ville}', '{c.Telephone}')");
+        }
+        private void SauvegarderPizzas( Pizza p)
+        {
+            Connexion.ExecuteNonQuery($"INSERT INTO Pizza (Nom, Prix) " +
+                                      $"VALUES ('{p.Nom}', {p.Prix})");
+        }
+        private void SauvegarderCommandes(Commande cmd)
+        {
+
+            // Sauvegarder la commande
+            Connexion.ExecuteNonQuery($"INSERT INTO Commande (num_commande, date_, emporter, id_client) " +
+                                      $"VALUES ({cmd.NumCommande}, '{cmd.DateCommande:yyyy-MM-dd HH:mm:ss}', {(cmd.AEmporter ? 1 : 0)}, " +
+                                      $"(SELECT id_client FROM Client WHERE Nom = '{cmd.LeClient.Nom}' AND Prenom = '{cmd.LeClient.Prenom}'))");
+
+            
+        }
+        //public void SauvegarderGestion(Dictionary<Commande, List<Pizza>> commandesPizza)
+        //{
+        //    foreach (var entry in commandesPizza)
+        //    {
+        //        Commande cmd = entry.Key;
+        //        List<Pizza> pizzas = entry.Value;
+        //        foreach (var pizza in pizzas.Distinct())
+        //        {
+        //            int quantite = pizzas.Count(p => p.Nom == pizza.Nom);
+        //            Connexion.ExecuteNonQuery($"INSERT INTO Gestion (id_pizza, num_commande, quantite) VALUES " +
+        //                                      $"((SELECT id_pizza FROM Pizza WHERE Nom = '{pizza.Nom}'), " +
+        //                                      $"{cmd.NumCommande}," +
+        //                                      $"{quantite})");
+        //        }
+        //    }
+        //}
+        private void LoadPizzas()
+        {
+            var result = Connexion.ExecuteQuery("SELECT * FROM Pizza");
+            foreach (DataRow row in result.Rows)
+            {
+                string nom = row["Nom"].ToString();
+                double prix = Convert.ToDouble(row["Prix"]);
+                MesPizzas.Add(new Pizza(nom, prix));
+            }
+        }
+        private void LoadClients()
+        {
+            var result = Connexion.ExecuteQuery("SELECT * FROM Client");
+            foreach (DataRow row in result.Rows)
+            {
+                string adresse = row["Adresse"].ToString();
+                string codePostal = row["Code_postal"].ToString();
+                string nom = row["Nom"].ToString();
+                string prenom = row["Prenom"].ToString();
+                string telephone = row["Telephone"].ToString();
+                string ville = row["Ville"].ToString();
+                MesClients.Add(new Client(adresse, codePostal, nom, prenom, telephone, ville));
+            }
+        }
+        private void LoadCommandes()
+        {
+            var result = Connexion.ExecuteQuery("SELECT * FROM Commande");
+            foreach (DataRow row in result.Rows)
+            {
+                int numCommande = Convert.ToInt32(row["Num_Commande"]);
+                DateTime dateCommande = Convert.ToDateTime(row["date_"]);
+                bool aEmporter = Convert.ToBoolean(row["emporter"]); // PROBLEME ICI
+                //var aEmporter = row["aEmporter"];
+                int clientID = Convert.ToInt32(row["id_client"]);
+                Client leClient = null;
+                var clientResult = Connexion.ExecuteQuery($"SELECT * FROM Client WHERE id_client = {clientID}");
+                if (clientResult.Rows.Count > 0)
+                {
+                    DataRow clientRow = clientResult.Rows[0];
+                    string adresse = clientRow["Adresse"].ToString();
+                    string codePostal = clientRow["Code_postal"].ToString();
+                    string nom = clientRow["Nom"].ToString();
+                    string prenom = clientRow["Prenom"].ToString();
+                    string telephone = clientRow["Telephone"].ToString();
+                    string ville = clientRow["Ville"].ToString();
+                    leClient = new Client(adresse, codePostal, nom, prenom, telephone, ville);
+                }
+                Commande cmd = new Commande(leClient)
+                {
+                    NumCommande = numCommande,
+                    DateCommande = dateCommande,
+                    AEmporter = aEmporter
+                };
+                MesCommandes.Add(cmd);
+            }
+        }
+        private void LoadAll()
+        {
+            LoadPizzas();
+            LoadClients();
+            LoadCommandes();
+        }
+
     }
 }

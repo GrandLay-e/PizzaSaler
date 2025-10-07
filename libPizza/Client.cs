@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 
 namespace libPizza
 {
@@ -15,7 +16,6 @@ namespace libPizza
         private string prenom;
         private string telephone;
         private string ville;
-
 
         public string Adresse
         {

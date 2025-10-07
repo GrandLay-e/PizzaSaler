@@ -13,13 +13,12 @@ namespace wfPizza
 {
     public partial class FrmAddClient : Form
     {
-        private Form1 _accueil;
-
+        private Home _accueil;
         public FrmAddClient()
         {
             InitializeComponent();
         }
-        public FrmAddClient(Form1 accueil)
+        public FrmAddClient(Home accueil)
         {
             InitializeComponent();
             _accueil = accueil;
@@ -36,13 +35,12 @@ namespace wfPizza
                 }
             }
 
-            _accueil.gestionPizza.MesClients.Add(new Client(clientAdressInput.Text,
+            _accueil.GestionPizza.AjouterNouveauClient(clientAdressInput.Text,
                                         clientPostalCodeInput.Text,
                                         clientLastNameInput.Text,
                                         clientFirstNameInput.Text,
                                         clientPhoneNumberInput.Text,
-                                        clientCityInput.Text));
-
+                                        clientCityInput.Text);
             this.Close();
 
         }

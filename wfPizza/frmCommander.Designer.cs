@@ -70,7 +70,6 @@
             // 
             // grbClient
             // 
-            grbClient.Controls.Add(boxAEmporter);
             grbClient.Controls.Add(lblClientCity);
             grbClient.Controls.Add(lblClientPostalCode);
             grbClient.Controls.Add(lblClientAdress);
@@ -83,9 +82,11 @@
             grbClient.Controls.Add(clientPhoneNumber);
             grbClient.Controls.Add(clientFirstName);
             grbClient.Controls.Add(cmbClientName);
-            grbClient.Location = new Point(215, 30);
+            grbClient.Location = new Point(269, 38);
+            grbClient.Margin = new Padding(4, 4, 4, 4);
             grbClient.Name = "grbClient";
-            grbClient.Size = new Size(554, 223);
+            grbClient.Padding = new Padding(4, 4, 4, 4);
+            grbClient.Size = new Size(692, 279);
             grbClient.TabIndex = 0;
             grbClient.TabStop = false;
             grbClient.Text = "Client";
@@ -94,9 +95,10 @@
             // boxAEmporter
             // 
             boxAEmporter.AutoSize = true;
-            boxAEmporter.Location = new Point(19, 193);
+            boxAEmporter.Location = new Point(529, 110);
+            boxAEmporter.Margin = new Padding(4, 4, 4, 4);
             boxAEmporter.Name = "boxAEmporter";
-            boxAEmporter.Size = new Size(111, 24);
+            boxAEmporter.Size = new Size(130, 29);
             boxAEmporter.TabIndex = 12;
             boxAEmporter.Text = "A emporter ";
             boxAEmporter.UseVisualStyleBackColor = true;
@@ -104,115 +106,130 @@
             // lblClientCity
             // 
             lblClientCity.AutoSize = true;
-            lblClientCity.Location = new Point(289, 153);
+            lblClientCity.Location = new Point(361, 191);
+            lblClientCity.Margin = new Padding(4, 0, 4, 0);
             lblClientCity.Name = "lblClientCity";
-            lblClientCity.Size = new Size(38, 20);
+            lblClientCity.Size = new Size(44, 25);
             lblClientCity.TabIndex = 11;
             lblClientCity.Text = "Ville";
             // 
             // lblClientPostalCode
             // 
             lblClientPostalCode.AutoSize = true;
-            lblClientPostalCode.Location = new Point(289, 97);
+            lblClientPostalCode.Location = new Point(361, 121);
+            lblClientPostalCode.Margin = new Padding(4, 0, 4, 0);
             lblClientPostalCode.Name = "lblClientPostalCode";
-            lblClientPostalCode.Size = new Size(87, 20);
+            lblClientPostalCode.Size = new Size(106, 25);
             lblClientPostalCode.TabIndex = 10;
             lblClientPostalCode.Text = "Code Postal";
             // 
             // lblClientAdress
             // 
             lblClientAdress.AutoSize = true;
-            lblClientAdress.Location = new Point(289, 43);
+            lblClientAdress.Location = new Point(361, 54);
+            lblClientAdress.Margin = new Padding(4, 0, 4, 0);
             lblClientAdress.Name = "lblClientAdress";
-            lblClientAdress.Size = new Size(61, 20);
+            lblClientAdress.Size = new Size(75, 25);
             lblClientAdress.TabIndex = 9;
             lblClientAdress.Text = "Adresse";
             // 
             // lblClientPhone
             // 
             lblClientPhone.AutoSize = true;
-            lblClientPhone.Location = new Point(19, 153);
+            lblClientPhone.Location = new Point(24, 191);
+            lblClientPhone.Margin = new Padding(4, 0, 4, 0);
             lblClientPhone.Name = "lblClientPhone";
-            lblClientPhone.Size = new Size(78, 20);
+            lblClientPhone.Size = new Size(92, 25);
             lblClientPhone.TabIndex = 8;
             lblClientPhone.Text = "Téléphone";
             // 
             // lblClientFIrstName
             // 
             lblClientFIrstName.AutoSize = true;
-            lblClientFIrstName.Location = new Point(19, 97);
+            lblClientFIrstName.Location = new Point(24, 121);
+            lblClientFIrstName.Margin = new Padding(4, 0, 4, 0);
             lblClientFIrstName.Name = "lblClientFIrstName";
-            lblClientFIrstName.Size = new Size(60, 20);
+            lblClientFIrstName.Size = new Size(74, 25);
             lblClientFIrstName.TabIndex = 7;
             lblClientFIrstName.Text = "Prénom";
             // 
             // lblclientName
             // 
             lblclientName.AutoSize = true;
-            lblclientName.Location = new Point(19, 43);
+            lblclientName.Location = new Point(24, 54);
+            lblclientName.Margin = new Padding(4, 0, 4, 0);
             lblclientName.Name = "lblclientName";
-            lblclientName.Size = new Size(46, 20);
+            lblclientName.Size = new Size(57, 25);
             lblclientName.TabIndex = 6;
             lblclientName.Text = "Nom ";
             // 
             // clientCity
             // 
-            clientCity.Location = new Point(397, 146);
+            clientCity.Location = new Point(496, 182);
+            clientCity.Margin = new Padding(4, 4, 4, 4);
             clientCity.Name = "clientCity";
             clientCity.ReadOnly = true;
-            clientCity.Size = new Size(151, 27);
+            clientCity.Size = new Size(188, 31);
             clientCity.TabIndex = 5;
             // 
             // clientPostalCode
             // 
-            clientPostalCode.Location = new Point(397, 90);
+            clientPostalCode.Location = new Point(496, 112);
+            clientPostalCode.Margin = new Padding(4, 4, 4, 4);
             clientPostalCode.Name = "clientPostalCode";
             clientPostalCode.ReadOnly = true;
-            clientPostalCode.Size = new Size(151, 27);
+            clientPostalCode.Size = new Size(188, 31);
             clientPostalCode.TabIndex = 4;
             // 
             // clientAdress
             // 
-            clientAdress.Location = new Point(397, 40);
+            clientAdress.Location = new Point(496, 50);
+            clientAdress.Margin = new Padding(4, 4, 4, 4);
             clientAdress.Name = "clientAdress";
             clientAdress.ReadOnly = true;
-            clientAdress.Size = new Size(151, 27);
+            clientAdress.Size = new Size(188, 31);
             clientAdress.TabIndex = 3;
             // 
             // clientPhoneNumber
             // 
-            clientPhoneNumber.Location = new Point(101, 146);
+            clientPhoneNumber.Location = new Point(126, 182);
+            clientPhoneNumber.Margin = new Padding(4, 4, 4, 4);
             clientPhoneNumber.Name = "clientPhoneNumber";
             clientPhoneNumber.ReadOnly = true;
-            clientPhoneNumber.Size = new Size(151, 27);
+            clientPhoneNumber.Size = new Size(188, 31);
             clientPhoneNumber.TabIndex = 2;
             // 
             // clientFirstName
             // 
-            clientFirstName.Location = new Point(101, 90);
+            clientFirstName.Location = new Point(126, 112);
+            clientFirstName.Margin = new Padding(4, 4, 4, 4);
             clientFirstName.Name = "clientFirstName";
             clientFirstName.ReadOnly = true;
-            clientFirstName.Size = new Size(151, 27);
+            clientFirstName.Size = new Size(188, 31);
             clientFirstName.TabIndex = 1;
             // 
             // cmbClientName
             // 
             cmbClientName.FormattingEnabled = true;
-            cmbClientName.Location = new Point(101, 40);
+            cmbClientName.Location = new Point(126, 50);
+            cmbClientName.Margin = new Padding(4, 4, 4, 4);
             cmbClientName.Name = "cmbClientName";
-            cmbClientName.Size = new Size(151, 28);
+            cmbClientName.Size = new Size(188, 33);
             cmbClientName.TabIndex = 0;
             // 
             // grbCommande
             // 
+            grbCommande.Controls.Add(boxAEmporter);
             grbCommande.Controls.Add(btsAddPizza);
             grbCommande.Controls.Add(qtePizzaIndication);
             grbCommande.Controls.Add(cmbPizzaIndication);
             grbCommande.Controls.Add(qtePizzaInput);
             grbCommande.Controls.Add(cmbPizza);
-            grbCommande.Location = new Point(215, 263);
+            grbCommande.Location = new Point(269, 329);
+            grbCommande.Margin = new Padding(4, 4, 4, 4);
             grbCommande.Name = "grbCommande";
-            grbCommande.Size = new Size(554, 175);
+            grbCommande.Padding = new Padding(4, 4, 4, 4);
+            grbCommande.Size = new Size(692, 219);
             grbCommande.TabIndex = 1;
             grbCommande.TabStop = false;
             grbCommande.Text = "Commande";
@@ -220,9 +237,10 @@
             // 
             // btsAddPizza
             // 
-            btsAddPizza.Location = new Point(219, 140);
+            btsAddPizza.Location = new Point(274, 175);
+            btsAddPizza.Margin = new Padding(4, 4, 4, 4);
             btsAddPizza.Name = "btsAddPizza";
-            btsAddPizza.Size = new Size(94, 29);
+            btsAddPizza.Size = new Size(118, 36);
             btsAddPizza.TabIndex = 4;
             btsAddPizza.Text = "Ajouter";
             btsAddPizza.UseVisualStyleBackColor = true;
@@ -231,41 +249,47 @@
             // qtePizzaIndication
             // 
             qtePizzaIndication.AutoSize = true;
-            qtePizzaIndication.Location = new Point(375, 47);
+            qtePizzaIndication.Location = new Point(325, 59);
+            qtePizzaIndication.Margin = new Padding(4, 0, 4, 0);
             qtePizzaIndication.Name = "qtePizzaIndication";
-            qtePizzaIndication.Size = new Size(66, 20);
+            qtePizzaIndication.Size = new Size(80, 25);
             qtePizzaIndication.TabIndex = 3;
             qtePizzaIndication.Text = "Quantité";
             // 
             // cmbPizzaIndication
             // 
             cmbPizzaIndication.AutoSize = true;
-            cmbPizzaIndication.Location = new Point(55, 47);
+            cmbPizzaIndication.Location = new Point(69, 59);
+            cmbPizzaIndication.Margin = new Padding(4, 0, 4, 0);
             cmbPizzaIndication.Name = "cmbPizzaIndication";
-            cmbPizzaIndication.Size = new Size(43, 20);
+            cmbPizzaIndication.Size = new Size(51, 25);
             cmbPizzaIndication.TabIndex = 2;
             cmbPizzaIndication.Text = "Pizza";
             // 
             // qtePizzaInput
             // 
-            qtePizzaInput.Location = new Point(375, 85);
+            qtePizzaInput.Location = new Point(325, 108);
+            qtePizzaInput.Margin = new Padding(4, 4, 4, 4);
             qtePizzaInput.Name = "qtePizzaInput";
-            qtePizzaInput.Size = new Size(75, 27);
+            qtePizzaInput.Size = new Size(94, 31);
             qtePizzaInput.TabIndex = 1;
             // 
             // cmbPizza
             // 
             cmbPizza.FormattingEnabled = true;
-            cmbPizza.Location = new Point(30, 85);
+            cmbPizza.Location = new Point(38, 106);
+            cmbPizza.Margin = new Padding(4, 4, 4, 4);
             cmbPizza.Name = "cmbPizza";
-            cmbPizza.Size = new Size(120, 28);
+            cmbPizza.Size = new Size(149, 33);
             cmbPizza.TabIndex = 0;
+            cmbPizza.SelectedIndexChanged += cmbPizza_SelectedIndexChanged;
             // 
             // btnCommander
             // 
-            btnCommander.Location = new Point(215, 444);
+            btnCommander.Location = new Point(269, 555);
+            btnCommander.Margin = new Padding(4, 4, 4, 4);
             btnCommander.Name = "btnCommander";
-            btnCommander.Size = new Size(554, 69);
+            btnCommander.Size = new Size(692, 86);
             btnCommander.TabIndex = 2;
             btnCommander.Text = "Commander";
             btnCommander.UseVisualStyleBackColor = true;
@@ -277,7 +301,7 @@
             toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripSeparator1, toolStripButton1, toolStripButton2, toolStripButton3 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(800, 27);
+            toolStrip1.Size = new Size(1000, 27);
             toolStrip1.TabIndex = 3;
             toolStrip1.Text = "toolStrip1";
             // 
@@ -320,25 +344,29 @@
             // listCommClient
             // 
             listCommClient.FormattingEnabled = true;
-            listCommClient.Location = new Point(12, 30);
+            listCommClient.ItemHeight = 25;
+            listCommClient.Location = new Point(15, 38);
+            listCommClient.Margin = new Padding(4, 4, 4, 4);
             listCommClient.Name = "listCommClient";
-            listCommClient.Size = new Size(176, 404);
+            listCommClient.Size = new Size(219, 504);
             listCommClient.TabIndex = 4;
             // 
             // lblMtPizza
             // 
             lblMtPizza.AutoSize = true;
-            lblMtPizza.Location = new Point(73, 444);
+            lblMtPizza.Location = new Point(91, 555);
+            lblMtPizza.Margin = new Padding(4, 0, 4, 0);
             lblMtPizza.Name = "lblMtPizza";
-            lblMtPizza.Size = new Size(17, 20);
+            lblMtPizza.Size = new Size(22, 25);
             lblMtPizza.TabIndex = 5;
             lblMtPizza.Text = "0";
             // 
             // btnEffacer
             // 
-            btnEffacer.Location = new Point(38, 484);
+            btnEffacer.Location = new Point(48, 605);
+            btnEffacer.Margin = new Padding(4, 4, 4, 4);
             btnEffacer.Name = "btnEffacer";
-            btnEffacer.Size = new Size(94, 29);
+            btnEffacer.Size = new Size(118, 36);
             btnEffacer.TabIndex = 6;
             btnEffacer.Text = "Effacer";
             btnEffacer.UseVisualStyleBackColor = true;
@@ -346,9 +374,9 @@
             // 
             // FrmCommander
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 525);
+            ClientSize = new Size(1000, 656);
             Controls.Add(btnEffacer);
             Controls.Add(lblMtPizza);
             Controls.Add(listCommClient);
@@ -356,6 +384,7 @@
             Controls.Add(btnCommander);
             Controls.Add(grbCommande);
             Controls.Add(grbClient);
+            Margin = new Padding(4, 4, 4, 4);
             Name = "FrmCommander";
             Text = "Commander";
             grbClient.ResumeLayout(false);

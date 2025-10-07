@@ -26,6 +26,5 @@ namespace libPizza
         public Pizza(string nom) { this.Nom = nom; this.Prix = 0; }
         public string GetNomPizza() { return this.Nom; }
         public Pizza(string nom, double prix) { this.Nom = nom; this.Prix = prix; }
-
     }
 }

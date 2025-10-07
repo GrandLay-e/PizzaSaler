@@ -1,15 +1,18 @@
 using libPizza;
+
 namespace wfPizza
 {
-    public partial class Form1 : Form
+    public partial class Home : Form
     {
-        //public List<Client> listeClients;
-        public Gestion gestionPizza;
-        public Form1()
+        private Gestion gestionPizza;
+        public Gestion GestionPizza { 
+            get { return gestionPizza; }
+            set { gestionPizza = value; }
+        }
+        public Home()
         {
             InitializeComponent();
-            //listeClients = new List<Client>();
-            gestionPizza = new Gestion();
+            GestionPizza = new Gestion();
         }
 
         private void menuCommandButton_Click(object sender, EventArgs e)

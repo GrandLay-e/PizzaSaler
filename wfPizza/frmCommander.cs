@@ -4,13 +4,25 @@ namespace wfPizza
 {
     public partial class FrmCommander : Form
     {
-        private Form1 _accueil;
+        private Home _accueil;
+        private Client actualClient;
+        private Pizza chosedPizza;
+        //private Dictionary<Commande, List<Pizza>> commandesPizzas = new Dictionary<Commande, List<Pizza>>();
+
+        //public Dictionary<Commande, List<Pizza>> CommandesPizzas
+        //{
+        //    get { return commandesPizzas; }
+        //    set { commandesPizzas = value; }
+        //}
+
+        // Constructeur par défaut
         public FrmCommander()
         {
             InitializeComponent();
         }
 
-        public FrmCommander(Form1 accueil)
+        // Constructeur avec référence à l'accueil
+        public FrmCommander(Home accueil)
         {
             InitializeComponent();
             _accueil = accueil;
@@ -18,13 +30,14 @@ namespace wfPizza
             cmbClientName.SelectedIndexChanged += cmbClientName_SelectedIndexChanged;
         }
 
+        // Méthode pour remplir la ComboBox avec les noms des clients
         private void RemplirComboBox()
         {
-            cmbClientName.DataSource = _accueil.gestionPizza.MesClients;
+            cmbClientName.DataSource = _accueil.GestionPizza.MesClients;
             cmbClientName.DisplayMember = "Nom";
         }
 
-
+        // Méthode pour réinitialiser les champs du formulaire
         private void raz()
         {
             cmbPizza.SelectedIndex = -1;
@@ -38,8 +51,20 @@ namespace wfPizza
             raz();
         }
 
+        // Gestion de l'événement de clic sur le bouton "Commander"
         private void btnCommander_Click(object sender, EventArgs e)
         {
+            foreach(Pizza pizza in _accueil.GestionPizza.MesPizzas)
+            {
+                if (pizza.Nom == cmbPizza.Text)
+                {
+                    _accueil.GestionPizza.AjouterCommande(actualClient);
+                    break;
+                }
+            }
+
+            //MessageBox.Show(_accueil.GestionPizza.ToString());
+
             foreach (Control control in grbClient.Controls)
             {
                 switch (control)
@@ -53,16 +78,17 @@ namespace wfPizza
                         chk.Checked = false;
                         break;
                     default:
+                        // Ne rien faire pour les autres types de contrôles
                         break;
                 }
             }
-            raz();
+            //raz();
         }
 
         private void grbClient_Enter(object sender, EventArgs e)
         {
-            Client monClient = _accueil.gestionPizza.GetClient(cmbClientName.Text);
-            if (monClient == null)
+            actualClient = _accueil.GestionPizza.GetClient(cmbClientName.Text);
+            if (actualClient == null)
             {
                 clientAdress.Text = "";
                 clientPostalCode.Text = "";
@@ -72,35 +98,37 @@ namespace wfPizza
             }
             else
             {
-                clientAdress.Text = monClient.Adresse;
-                clientPostalCode.Text = monClient.CodePostal;
-                clientFirstName.Text = monClient.Prenom;
-                clientCity.Text = monClient.Ville;
-                clientPhoneNumber.Text = monClient.Telephone;
+                clientAdress.Text = actualClient.Adresse;
+                clientPostalCode.Text = actualClient.CodePostal;
+                clientFirstName.Text = actualClient.Prenom;
+                clientCity.Text = actualClient.Ville;
+                clientPhoneNumber.Text = actualClient.Telephone;
             }
 
         }
 
         private void cmbClientName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Client monClient = _accueil.gestionPizza.GetClient(cmbClientName.Text);
-            clientAdress.Text = monClient.Adresse;
-            clientPostalCode.Text = monClient.CodePostal;
-            clientFirstName.Text = monClient.Prenom;
-            clientCity.Text = monClient.Ville;
-            clientPhoneNumber.Text = monClient.Telephone;
+            actualClient = _accueil.GestionPizza.GetClient(cmbClientName.Text);
+            clientAdress.Text = actualClient.Adresse;
+            clientPostalCode.Text = actualClient.CodePostal;
+            clientFirstName.Text = actualClient.Prenom;
+            clientCity.Text = actualClient.Ville;
+            clientPhoneNumber.Text = actualClient.Telephone;
         }
 
         private void grbCommande_Enter(object sender, EventArgs e)
         {
-            foreach (Pizza pizza in _accueil.gestionPizza.MesPizzas)
+            foreach (Pizza pizza in _accueil.GestionPizza.MesPizzas)
             {
-                cmbPizza.Items.Add(pizza.Nom);
+                if(!cmbPizza.Items.Contains(pizza.Nom))
+                    cmbPizza.Items.Add(pizza.Nom);
             }
         }
 
         private void btsAddPizza_Click(object sender, EventArgs e)
         {
+            double total = Convert.ToDouble(lblMtPizza.Text);
             string nomPizza = cmbPizza.Text;
             int qtePizza = (int)qtePizzaInput.Value;
             if (string.IsNullOrWhiteSpace(nomPizza) || qtePizza == 0)
@@ -110,22 +138,29 @@ namespace wfPizza
             }
             else
             {
-                Pizza maPizza = _accueil.gestionPizza.GetPizza(nomPizza);
-                if (maPizza != null)
+                //Pizza maPizza = _accueil.GestionPizza.GetPizza(nomPizza);
+                chosedPizza = _accueil.GestionPizza.GetPizza(nomPizza);
+                if (chosedPizza != null)
                 {
-                    double montantPizza = maPizza.Prix * qtePizza;
-                    double total = montantPizza * qtePizza;
+                    double montantPizza = chosedPizza.Prix * qtePizza;
+                    bool aEmporter = boxAEmporter.Checked;
+                    total += montantPizza;
 
-                    listCommClient.Items.Add($"{nomPizza} - {qtePizza} - {montantPizza} €");
+                    listCommClient.Items.Add($"{cmbClientName.Text} - {nomPizza} - {qtePizza} - {montantPizza} € {(aEmporter ? "à emporter" : "sur place")}");
                     lblMtPizza.Text = total.ToString("0.00");
 
-                    _accueil.gestionPizza.AjouterCommande(_accueil.gestionPizza.GetClient(cmbClientName.Text));
+                    //_accueil.GestionPizza.AjouterCommande(actualClient);
+                    _accueil.GestionPizza.AjouterPizza(chosedPizza, _accueil.GestionPizza.NumCommandeClient(actualClient));
                 }
                 else
                 {
                     MessageBox.Show("La pizza sélectionnée n'existe pas.");
                 }
             }
+        }
+
+        private void cmbPizza_SelectedIndexChanged(object sender, EventArgs e)
+        {
         }
     }
 }
