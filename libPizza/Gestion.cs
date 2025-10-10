@@ -53,9 +53,9 @@ namespace libPizza
             return 0;
         }
 
-        public void AjouterCommande(Client client)
+        public void AjouterCommande(Client client, bool emporter)
         {
-            Commande commande = new Commande(client);
+            Commande commande = new Commande(client, emporter);
             MesCommandes.Add(commande);
             SauvegarderCommandes(commande);
         }
@@ -72,10 +72,6 @@ namespace libPizza
             SauvegarderClients(client);
         }
 
-        //public void AjouterNouvelPizza(string nom)
-        //{
-        //    MesPizzas.Add(new Pizza(nom));
-        //}
         public void AjouterNouvelPizza(string nom, double prix)
         {
             Pizza pizza = new Pizza(nom, prix);
@@ -84,15 +80,17 @@ namespace libPizza
         }
 
 
-        public void AjouterPizza(Pizza pizza, int numCommande)
+        public void AjouterPizza(Pizza pizza, int numCommande, int quantite)
         {
             foreach(Commande commande in MesCommandes)
             {
                 if(commande.NumCommande == numCommande)
                 {
                     commande.AjouterNouvellePizza(pizza);
+                    break;
                 }
             }
+            SauvegarderGestion(GetCommande(numCommande), pizza, quantite);
         }
 
         public List<Client> GetListClient() => MesClients;
@@ -157,31 +155,17 @@ namespace libPizza
         }
         private void SauvegarderCommandes(Commande cmd)
         {
-
-            // Sauvegarder la commande
             Connexion.ExecuteNonQuery($"INSERT INTO Commande (num_commande, date_, emporter, id_client) " +
                                       $"VALUES ({cmd.NumCommande}, '{cmd.DateCommande:yyyy-MM-dd HH:mm:ss}', {(cmd.AEmporter ? 1 : 0)}, " +
                                       $"(SELECT id_client FROM Client WHERE Nom = '{cmd.LeClient.Nom}' AND Prenom = '{cmd.LeClient.Prenom}'))");
 
-            // Sauvegarder les pizzas associées à la commande dans la table de gestion
-            //SauvegarderGestion(cmd);
         }
-        public void SauvegarderGestion(Commande cmd)
+        private void SauvegarderGestion(Commande cmd, Pizza p, int quantite)
         {
-            // Grouper les pizzas par nom pour calculer la quantité de chaque type de pizza
-            var pizzasGroupees = cmd.MesPizzas.GroupBy(p => p.Nom);
-            
-            foreach (var groupe in pizzasGroupees)
-            {
-                string nomPizza = groupe.Key;
-                int quantite = groupe.Count(); // Nombre de pizzas de ce type dans la commande
-                
-                // Insérer UNE SEULE ligne par type de pizza avec la quantité totale
-                Connexion.ExecuteNonQuery(
-                    $"INSERT INTO Gestion (id_pizza, num_commande, quantite) " +
-                    $"VALUES ((SELECT id_pizza FROM Pizza WHERE Nom = '{nomPizza}'), " +
-                    $"{cmd.NumCommande}, {quantite})");
-            }
+            Connexion.ExecuteNonQuery(
+                $"INSERT INTO Gestion (id_pizza, num_commande, quantite) " +
+                $"VALUES ((SELECT id_pizza FROM Pizza WHERE Nom = '{p.Nom}'), " +
+                $"{cmd.NumCommande}, {quantite})");
         }
 
         private void LoadPizzas()
@@ -215,8 +199,7 @@ namespace libPizza
             {
                 int numCommande = Convert.ToInt32(row["Num_Commande"]);
                 DateTime dateCommande = Convert.ToDateTime(row["date_"]);
-                bool aEmporter = Convert.ToBoolean(row["emporter"]); // PROBLEME ICI
-                //var aEmporter = row["aEmporter"];
+                bool aEmporter = Convert.ToBoolean(row["emporter"]);
                 int clientID = Convert.ToInt32(row["id_client"]);
                 Client leClient = null;
                 var clientResult = Connexion.ExecuteQuery($"SELECT * FROM Client WHERE id_client = {clientID}");
@@ -231,11 +214,10 @@ namespace libPizza
                     string ville = clientRow["Ville"].ToString();
                     leClient = new Client(adresse, codePostal, nom, prenom, telephone, ville);
                 }
-                Commande cmd = new Commande(leClient)
+                Commande cmd = new Commande(leClient, aEmporter)
                 {
                     NumCommande = numCommande,
-                    DateCommande = dateCommande,
-                    AEmporter = aEmporter
+                    DateCommande = dateCommande
                 };
                 MesCommandes.Add(cmd);
             }

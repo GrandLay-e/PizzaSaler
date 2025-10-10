@@ -70,6 +70,7 @@
             // 
             // grbClient
             // 
+            grbClient.Controls.Add(boxAEmporter);
             grbClient.Controls.Add(lblClientCity);
             grbClient.Controls.Add(lblClientPostalCode);
             grbClient.Controls.Add(lblClientAdress);
@@ -83,9 +84,9 @@
             grbClient.Controls.Add(clientFirstName);
             grbClient.Controls.Add(cmbClientName);
             grbClient.Location = new Point(269, 38);
-            grbClient.Margin = new Padding(4, 4, 4, 4);
+            grbClient.Margin = new Padding(4);
             grbClient.Name = "grbClient";
-            grbClient.Padding = new Padding(4, 4, 4, 4);
+            grbClient.Padding = new Padding(4);
             grbClient.Size = new Size(692, 279);
             grbClient.TabIndex = 0;
             grbClient.TabStop = false;
@@ -95,8 +96,8 @@
             // boxAEmporter
             // 
             boxAEmporter.AutoSize = true;
-            boxAEmporter.Location = new Point(529, 110);
-            boxAEmporter.Margin = new Padding(4, 4, 4, 4);
+            boxAEmporter.Location = new Point(24, 254);
+            boxAEmporter.Margin = new Padding(4);
             boxAEmporter.Name = "boxAEmporter";
             boxAEmporter.Size = new Size(130, 29);
             boxAEmporter.TabIndex = 12;
@@ -166,7 +167,7 @@
             // clientCity
             // 
             clientCity.Location = new Point(496, 182);
-            clientCity.Margin = new Padding(4, 4, 4, 4);
+            clientCity.Margin = new Padding(4);
             clientCity.Name = "clientCity";
             clientCity.ReadOnly = true;
             clientCity.Size = new Size(188, 31);
@@ -175,7 +176,7 @@
             // clientPostalCode
             // 
             clientPostalCode.Location = new Point(496, 112);
-            clientPostalCode.Margin = new Padding(4, 4, 4, 4);
+            clientPostalCode.Margin = new Padding(4);
             clientPostalCode.Name = "clientPostalCode";
             clientPostalCode.ReadOnly = true;
             clientPostalCode.Size = new Size(188, 31);
@@ -184,7 +185,7 @@
             // clientAdress
             // 
             clientAdress.Location = new Point(496, 50);
-            clientAdress.Margin = new Padding(4, 4, 4, 4);
+            clientAdress.Margin = new Padding(4);
             clientAdress.Name = "clientAdress";
             clientAdress.ReadOnly = true;
             clientAdress.Size = new Size(188, 31);
@@ -193,7 +194,7 @@
             // clientPhoneNumber
             // 
             clientPhoneNumber.Location = new Point(126, 182);
-            clientPhoneNumber.Margin = new Padding(4, 4, 4, 4);
+            clientPhoneNumber.Margin = new Padding(4);
             clientPhoneNumber.Name = "clientPhoneNumber";
             clientPhoneNumber.ReadOnly = true;
             clientPhoneNumber.Size = new Size(188, 31);
@@ -202,7 +203,7 @@
             // clientFirstName
             // 
             clientFirstName.Location = new Point(126, 112);
-            clientFirstName.Margin = new Padding(4, 4, 4, 4);
+            clientFirstName.Margin = new Padding(4);
             clientFirstName.Name = "clientFirstName";
             clientFirstName.ReadOnly = true;
             clientFirstName.Size = new Size(188, 31);
@@ -212,23 +213,22 @@
             // 
             cmbClientName.FormattingEnabled = true;
             cmbClientName.Location = new Point(126, 50);
-            cmbClientName.Margin = new Padding(4, 4, 4, 4);
+            cmbClientName.Margin = new Padding(4);
             cmbClientName.Name = "cmbClientName";
             cmbClientName.Size = new Size(188, 33);
             cmbClientName.TabIndex = 0;
             // 
             // grbCommande
             // 
-            grbCommande.Controls.Add(boxAEmporter);
             grbCommande.Controls.Add(btsAddPizza);
             grbCommande.Controls.Add(qtePizzaIndication);
             grbCommande.Controls.Add(cmbPizzaIndication);
             grbCommande.Controls.Add(qtePizzaInput);
             grbCommande.Controls.Add(cmbPizza);
             grbCommande.Location = new Point(269, 329);
-            grbCommande.Margin = new Padding(4, 4, 4, 4);
+            grbCommande.Margin = new Padding(4);
             grbCommande.Name = "grbCommande";
-            grbCommande.Padding = new Padding(4, 4, 4, 4);
+            grbCommande.Padding = new Padding(4);
             grbCommande.Size = new Size(692, 219);
             grbCommande.TabIndex = 1;
             grbCommande.TabStop = false;
@@ -238,7 +238,7 @@
             // btsAddPizza
             // 
             btsAddPizza.Location = new Point(274, 175);
-            btsAddPizza.Margin = new Padding(4, 4, 4, 4);
+            btsAddPizza.Margin = new Padding(4);
             btsAddPizza.Name = "btsAddPizza";
             btsAddPizza.Size = new Size(118, 36);
             btsAddPizza.TabIndex = 4;
@@ -269,7 +269,7 @@
             // qtePizzaInput
             // 
             qtePizzaInput.Location = new Point(325, 108);
-            qtePizzaInput.Margin = new Padding(4, 4, 4, 4);
+            qtePizzaInput.Margin = new Padding(4);
             qtePizzaInput.Name = "qtePizzaInput";
             qtePizzaInput.Size = new Size(94, 31);
             qtePizzaInput.TabIndex = 1;
@@ -278,16 +278,15 @@
             // 
             cmbPizza.FormattingEnabled = true;
             cmbPizza.Location = new Point(38, 106);
-            cmbPizza.Margin = new Padding(4, 4, 4, 4);
+            cmbPizza.Margin = new Padding(4);
             cmbPizza.Name = "cmbPizza";
             cmbPizza.Size = new Size(149, 33);
             cmbPizza.TabIndex = 0;
-            cmbPizza.SelectedIndexChanged += cmbPizza_SelectedIndexChanged;
             // 
             // btnCommander
             // 
             btnCommander.Location = new Point(269, 555);
-            btnCommander.Margin = new Padding(4, 4, 4, 4);
+            btnCommander.Margin = new Padding(4);
             btnCommander.Name = "btnCommander";
             btnCommander.Size = new Size(692, 86);
             btnCommander.TabIndex = 2;
@@ -327,6 +326,7 @@
             toolStripButton2.Name = "toolStripButton2";
             toolStripButton2.Size = new Size(29, 24);
             toolStripButton2.Text = "toolStripButton2";
+            toolStripButton2.Click += toolStripButton2_Click;
             // 
             // toolStripButton3
             // 
@@ -336,6 +336,7 @@
             toolStripButton3.Name = "toolStripButton3";
             toolStripButton3.Size = new Size(29, 24);
             toolStripButton3.Text = "toolStripButton3";
+            toolStripButton3.Click += toolStripButton3_Click;
             // 
             // errorProvider1
             // 
@@ -346,7 +347,7 @@
             listCommClient.FormattingEnabled = true;
             listCommClient.ItemHeight = 25;
             listCommClient.Location = new Point(15, 38);
-            listCommClient.Margin = new Padding(4, 4, 4, 4);
+            listCommClient.Margin = new Padding(4);
             listCommClient.Name = "listCommClient";
             listCommClient.Size = new Size(219, 504);
             listCommClient.TabIndex = 4;
@@ -364,7 +365,7 @@
             // btnEffacer
             // 
             btnEffacer.Location = new Point(48, 605);
-            btnEffacer.Margin = new Padding(4, 4, 4, 4);
+            btnEffacer.Margin = new Padding(4);
             btnEffacer.Name = "btnEffacer";
             btnEffacer.Size = new Size(118, 36);
             btnEffacer.TabIndex = 6;
@@ -384,7 +385,7 @@
             Controls.Add(btnCommander);
             Controls.Add(grbCommande);
             Controls.Add(grbClient);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "FrmCommander";
             Text = "Commander";
             grbClient.ResumeLayout(false);

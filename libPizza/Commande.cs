@@ -56,14 +56,14 @@ namespace libPizza
             this.DateCommande = DateTime.Now;
 
         }
-        public Commande(Client client)
+        public Commande(Client client, bool emporter)
         {
             this.NbCommande += 1;
             this.NumCommande = NbCommande;
             this.DateCommande = DateTime.Now;
             this.MesPizzas = new List<Pizza>();
             this.LeClient = client;
-            this.AEmporter = true;
+            this.AEmporter = emporter;
         }
 
         public void AjouterNouvellePizza(Pizza pizza)

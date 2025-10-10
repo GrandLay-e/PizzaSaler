@@ -44,6 +44,10 @@ namespace wfPizza
             qtePizzaInput.Value = 0;
             listCommClient.Items.Clear();
             lblMtPizza.Text = "0";
+            PizzaInCommand.Clear();
+            actualClient = null;
+            cmbClientName.SelectedIndex = -1;
+            chosedPizza = null;
         }
 
         private void btnEffacer_Click(object sender, EventArgs e)
@@ -54,17 +58,12 @@ namespace wfPizza
         // Gestion de l'événement de clic sur le bouton "Commander"
         private void btnCommander_Click(object sender, EventArgs e)
         {
-            _accueil.GestionPizza.AjouterCommande(actualClient);
+            _accueil.GestionPizza.AjouterCommande(actualClient, boxAEmporter.Checked);
             int numCommande = _accueil.GestionPizza.NumCommandeClient(actualClient);
-            Commande commande = _accueil.GestionPizza.GetCommande(numCommande);
-            foreach(Pizza p in PizzaInCommand.Keys){
-                for(int i = 0; i < PizzaInCommand[p]; i++)
-                    commande.AjouterNouvellePizza(p);
+            foreach (Pizza p in PizzaInCommand.Keys)
+            {
+                _accueil.GestionPizza.AjouterPizza(p, numCommande, PizzaInCommand[p]);
             }
-
-            _accueil.GestionPizza.SauvegarderGestion(commande);
-
-            //MessageBox.Show($"Commande numéro {numCommande} ajoutée pour le client {actualClient.Nom}.");
 
             foreach (Control control in grbClient.Controls)
             {
@@ -123,14 +122,13 @@ namespace wfPizza
         {
             foreach (Pizza pizza in _accueil.GestionPizza.MesPizzas)
             {
-                if(!cmbPizza.Items.Contains(pizza.Nom))
+                if (!cmbPizza.Items.Contains(pizza.Nom))
                     cmbPizza.Items.Add(pizza.Nom);
             }
         }
 
         private void btsAddPizza_Click(object sender, EventArgs e)
         {
-            double total = Convert.ToDouble(lblMtPizza.Text);
             string nomPizza = cmbPizza.Text;
             int qtePizza = (int)qtePizzaInput.Value;
             if (string.IsNullOrWhiteSpace(nomPizza) || qtePizza == 0)
@@ -140,18 +138,15 @@ namespace wfPizza
             }
             else
             {
-                //Pizza maPizza = _accueil.GestionPizza.GetPizza(nomPizza);
                 chosedPizza = _accueil.GestionPizza.GetPizza(nomPizza);
                 if (chosedPizza != null)
                 {
-                    double montantPizza = chosedPizza.Prix * qtePizza;
-                    bool aEmporter = boxAEmporter.Checked;
-                    total += montantPizza;
+                    if (PizzaInCommand.ContainsKey(chosedPizza))
+                        PizzaInCommand[chosedPizza] += qtePizza;
+                    else
+                        PizzaInCommand.Add(chosedPizza, qtePizza);
 
-                    listCommClient.Items.Add($"{nomPizza} - {qtePizza} - {montantPizza} € {(aEmporter ? "à emporter" : "sur place")}");
-                    lblMtPizza.Text = total.ToString("0.00");
-
-                    PizzaInCommand.Add(chosedPizza, qtePizza);
+                    updateLstCommandesAndToTal();
                 }
                 else
                 {
@@ -160,8 +155,29 @@ namespace wfPizza
             }
         }
 
-        private void cmbPizza_SelectedIndexChanged(object sender, EventArgs e)
+        private void toolStripButton3_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("ma première version");
+        }
+
+        private void updateLstCommandesAndToTal()
+        {
+            listCommClient.Items.Clear();
+            double total = 0;
+            foreach (var entry in PizzaInCommand)
+            {
+                Pizza pizza = entry.Key;
+                int quantity = entry.Value;
+                double montantPizza = pizza.Prix * quantity;
+                listCommClient.Items.Add($"{quantity} - {pizza.Nom} : {montantPizza} €");
+                total += montantPizza;
+            }
+            lblMtPizza.Text = total.ToString("0.00");
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            raz();
         }
     }
 }
